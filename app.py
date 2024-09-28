@@ -1,17 +1,22 @@
 from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
 import yaml
 import requests
+import os
 
 from models import db, User
 
+
+
 app = Flask(__name__)
-app.config.from_object('config.Config')
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(app.root_path, "voter.db")
+db = SQLAlchemy(app)
+#app.config.from_object('config.Config')
 
 with open("config.yml", 'r') as stream:
     config = yaml.safe_load(stream)
 
 #initilizes data base
-db.init_app(app)
 @app.cli.command("initdb") 
 def initdb_command():
     db.create_all()
@@ -28,6 +33,8 @@ def signup():
 @app.route('/submit_signup', methods=['POST'])
 def submit_signup():
     username = request.form['username']
+    state = request.form['state']
+    county = request.form['county']
     location = request.form['location']
     # Process the sign-up (e.g., save to a database)
 
