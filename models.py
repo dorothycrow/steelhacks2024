@@ -1,25 +1,31 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import DeclarativeBase, mapped_column, relationship
-from sqlalchemy import Column, ForeignKey, Integer, String, Text, Boolean
+from sqlalchemy import Integer, String, Boolean
 
-class Base(DeclarativeBase):
-    pass
-
-db = SQLAlchemy(model_class=Base)
+# Initialize SQLAlchemy without an app instance
+db = SQLAlchemy()
 
 class User(db.Model):
-    id = mapped_column(Integer, primary_key=True, autoincrement= True)
-    username = mapped_column(String(24), nullable=False)
-    state = mapped_column(String(64), nullable=False) 
-    county = mapped_column(String(64), nullable=False)
-    registered = mapped_column(Integer, nullable=False) #1 for yes, 0 for not registered
+    __tablename__ = 'user'  # Specify the table name explicitly
 
-    
-    def __init__(self, username, state, county, registered):
-        self.username = username
+    id = db.Column(Integer, primary_key=True, autoincrement=True)
+    fName = db.Column(String(64), nullable=False)
+    lName = db.Column(String(64), nullable=False)
+    state = db.Column(String(64), nullable=False)
+    county = db.Column(String(64), nullable=False)
+    zipcode = db.Column(String(20), nullable=False)
+    dob = db.Column(String(20), nullable=False)
+    registered = db.Column(Boolean, nullable=False)
+    gameBadge = db.Column(Boolean, nullable=False)
+
+    def __init__(self, fName, lName, state, county, zipcode, dob, registered, gameBadge):
+        self.fName = fName
+        self.lName = lName
         self.state = state
         self.county = county
+        self.zipcode = zipcode
+        self.dob = dob
         self.registered = registered
-        
+        self.gameBadge = gameBadge
+
     def __repr__(self):
         return "<user {}>".format(self.username)
