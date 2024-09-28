@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Register </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <h1>You are not registered to vote! Here's how you can:</h1>
+    <p>Registering to vote is an important step in participating in your democracy. Follow these steps to ensure you’re registered:</p>
+    <ul>
+        <li><strong>Check Your Eligibility:</strong> Ensure you meet the eligibility requirements to vote in your state.</li>
+        <li><strong>Visit Your State's Election Office Website:</strong> Find specific information about voter registration in your state.</li>
+        <li><strong>Fill Out the Registration Form:</strong> You can often register online, by mail, or in person.</li>
+        <li><strong>Provide Necessary Information:</strong> Be prepared to provide identification and other required details.</li>
+        <li><strong>Submit Your Registration:</strong> Make sure to submit your application before your state's deadline.</li>
+        <li><strong>Confirm Your Registration:</strong> After submitting, check your registration status to ensure you are registered to vote.</li>
+    </ul>
+    <p>For more detailed information and resources, visit <a href="https://www.canivote.org/" target="_blank">CanIVote.org</a>.</p>
+    <button onclick="location.href='{{ url_for('elections') }}'">Continue to see upcoming elections and more!</button>
+
+</body>
+</html>
