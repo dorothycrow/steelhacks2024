@@ -89,12 +89,16 @@ def submit_signup():
             else:
                 new_user.registered = False
                 db.session.commit()
-                return jsonify({'status': 'error', 'message': 'Voter status not found'})
+                #return jsonify({'status': 'error', 'message': 'Voter status not found'})
+                return redirect(url_for('register'))  # Redirect to the new page
         else:
             return jsonify({'status': 'error', 'message': 'Failed to retrieve information'})
 
     return redirect(url_for('elections'))
 
+@app.route('/register')
+def register():
+    return render_template('register.html')
 
 @app.route('/elections')
 def elections():

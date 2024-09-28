@@ -1,0 +1,53 @@
+countdownBox {
+    display: flex;
+    width: 80%;
+    height: 20%;
+    padding: 2rem;
+    align-items: center;
+    background-color: #36599A;
+   
+ }
+ 
+ 
+ .body {
+    background-color: #ffffff;
+    margin: 0%;
+    max-height: 100%;
+    padding: 0% ;
+ }
+ 
+ 
+ .toolbar {
+    display: flex;
+    width: 110% !important;
+    height: 6rem;
+    margin-left:-1rem;
+     margin-top: -1.4rem;
+    background-color: #ffffff;
+   
+ }
+ 
+ 
+ .firstDiv {
+    display: flex;
+        width: 100%;
+        height: 7rem;
+        margin-top: -1.4rem;
+        background-color: #F8F8F8;
+       
+    }
+ 
+ 
+ 
+ 
+ .upcomingElections {
+   align-self: center;
+   
+ }
+ 
+ 
+                           
+ .countdownNumbers {
+    padding: 1rem;
+   
+ }
