@@ -4,22 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upcoming Elections</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .profile-icon {
+            width: 40px; /* Adjust size as needed */
+            height: 40px; /* Adjust size as needed */
+            vertical-align: middle; /* Align with text */
+            margin-right: 10px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .election-list {
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a.election-link {
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            color: #007BFF;
+            background-color: #e9ecef;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        a.election-link:hover {
+            background-color: #d3d3d3;
+        }
+        a.button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            color: white;
+            background-color: #007BFF;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        a.button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h1>Upcoming Elections</h1>
-    <ul>
-        {% for election in elections %}
-            <li>
-                <a href="{{ url_for('election_detail', election_id=election.id) }}">
-                    {{ election.name }} - Date: {{ election.date }}
-                </a>
-            </li>
-        {% else %}
-            <li>No upcoming elections found.</li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>
+            <a href="{{ url_for('user_profile') }}">
+                <img src="static/icons/user-profile-icon.jpg" alt="Profile Icon" class="profile-icon">
+            </a>
+            Upcoming Elections
+        </h1>
 
-    <a href="{{ url_for('index') }}" class="button">Go back to home page</a>
-    <a href="{{ url_for('matching_game') }}" class="button">Play A Trivia Game</a>
+        <div class="election-list">
+            <ul>
+                {% for election in elections %}
+                    <li>
+                        <a href="{{ url_for('election_detail', election_id=election.id) }}" class="election-link">
+                            {{ election.name }} - Date: {{ election.date }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li>No upcoming elections found.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <a href="{{ url_for('index') }}" class="button">Go back to sign up page</a>
+        <a href="{{ url_for('game') }}" class="button">Play A Trivia Game!</a>
+    </div>
 </body>
 </html>

@@ -6,17 +6,13 @@ import os
 
 from models import db, User
 
-
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(app.root_path, "voter.db")
 db = SQLAlchemy(app)
-#app.config.from_object('config.Config')
 
 with open("config.yml", 'r') as stream:
     config = yaml.safe_load(stream)
 
-#initilizes data base
 @app.cli.command("initdb") 
 def initdb_command():
     db.create_all()
@@ -33,8 +29,6 @@ def signup():
 @app.route('/submit_signup', methods=['POST'])
 def submit_signup():
     username = request.form['username']
-    state = request.form['state']
-    county = request.form['county']
     location = request.form['location']
     # Process the sign-up (e.g., save to a database)
 
@@ -56,18 +50,26 @@ def get_upcoming_elections(location):
         return response.json()  # Assuming the response is in JSON format
     except requests.RequestException as e:
         print(f"Error fetching elections: {e}")
-        return []  # Return an empty list if there's an error
+        # Return a mock list of elections
+        return [
+            {'id': 1, 'name': 'Mock Election 1', 'date': '2024-11-01'},
+            {'id': 2, 'name': 'Mock Election 2', 'date': '2024-12-15'},
+        ]  # Example mock elections
 
 @app.route('/election/<int:election_id>')
 def election_detail(election_id):
-    # Fetch election details based on election_id (you may need to adjust this)
-    # For demonstration, let's use a mock detail
     election = {'id': election_id, 'name': f'Election {election_id}', 'date': '2024-11-01', 'details': 'Details about the election.'}
     return render_template('election_detail.html', election=election)
 
 @app.route('/elections/game')
 def game():
     return render_template('game.html')
+
+@app.route('/profile')
+def user_profile():
+    # Fetch user information, here we are just using a mock user
+    user = {'username': 'john_doe', 'location': 'New York'}
+    return render_template('profile.html', user=user)
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5005, debug=True)
