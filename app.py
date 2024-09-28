@@ -28,7 +28,6 @@ def signup():
 @app.route('/submit_signup', methods=['POST'])
 def submit_signup():
     username = request.form['username']
-    password = request.form['password']
     location = request.form['location']
     # Process the sign-up (e.g., save to a database)
 
@@ -51,6 +50,13 @@ def get_upcoming_elections(location):
     except requests.RequestException as e:
         print(f"Error fetching elections: {e}")
         return []  # Return an empty list if there's an error
+
+@app.route('/election/<int:election_id>')
+def election_detail(election_id):
+    # Fetch election details based on election_id (you may need to adjust this)
+    # For demonstration, let's use a mock detail
+    election = {'id': election_id, 'name': f'Election {election_id}', 'date': '2024-11-01', 'details': 'Details about the election.'}
+    return render_template('election_detail.html', election=election)
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5005, debug=True)
