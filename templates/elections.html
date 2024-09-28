@@ -18,6 +18,8 @@
             <li>No upcoming elections found.</li>
         {% endfor %}
     </ul>
-    <a href="{{ url_for('index') }}">Go back to Index</a>
+
+    <a href="{{ url_for('index') }}" class="button">Go back to home page</a>
+    <a href="{{ url_for('matching_game') }}" class="button">Play A Trivia Game</a>
 </body>
 </html>

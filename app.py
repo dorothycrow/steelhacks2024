@@ -65,5 +65,9 @@ def election_detail(election_id):
     election = {'id': election_id, 'name': f'Election {election_id}', 'date': '2024-11-01', 'details': 'Details about the election.'}
     return render_template('election_detail.html', election=election)
 
+@app.route('/elections/game')
+def game():
+    return render_template('game.html')
+
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5005, debug=True)

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Political Party Matching Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .game-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .party, .policy {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            width: 30%;
+            text-align: center;
+            background-color: #fff;
+        }
+        .policy {
+            cursor: pointer;
+        }
+        .matched {
+            background-color: #d4edda; /* Green for correct */
+        }
+        .wrong {
+            background-color: #f8d7da; /* Red for incorrect */
+        }
+        .hidden {
+            display: none;
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Match Policies to Political Parties</h1>
+    <div class="game-container">
+        <div class="party" id="democratic">Democratic Party</div>
+        <div class="party" id="republican">Republican Party</div>
+        <div class="party" id="independent">Independent</div>
+    </div>
+    <div class="game-container">
+        <div class="policy" draggable="true" ondragstart="drag(event)" id="universal-healthcare">Universal Healthcare</div>
+        <div class="policy" draggable="true" ondragstart="drag(event)" id="tax-cuts">Tax Cuts for the Wealthy</div>
+        <div class="policy" draggable="true" ondragstart="drag(event)" id="green-new-deal">Green New Deal</div>
+        <div class="policy" draggable="true" ondragstart="drag(event)" id="social-security">Strengthening Social Security</div>
+        <div class="policy" draggable="true" ondragstart="drag(event)" id="small-government">Small Government</div>
+        <div class="policy" draggable="true" ondragstart="drag(event)" id="balanced-budget">Balanced Budget</div>
+        <div class="policy" draggable="true" ondragstart="drag(event)" id="minimum-wage">Raising Minimum Wage</div>
+        <div class="policy" draggable="true" ondragstart="drag(event)" id="gun-control">Stricter Gun Control Laws</div>
+        <div class="policy" draggable="true" ondragstart="drag(event)" id="climate-action">Climate Action Initiatives</div>
+        <div class="policy" draggable="true" ondragstart="drag(event)" id="tax-reform">Tax Reform for Middle Class</div>
+        <div class="policy" draggable="true" ondragstart="drag(event)" id="infrastructure">Investment in Infrastructure</div>
+        <div class="policy" draggable="true" ondragstart="drag(event)" id="voter-id">Voter ID Laws</div>
+        <div class="policy" draggable="true" ondragstart="drag(event)" id="social-issues">Focus on Social Issues</div>
+        <div class="policy" draggable="true" ondragstart="drag(event)" id="nonpartisan-approach">Non-Partisan Approach to Policies</div>
+    </div>
+
+    <button onclick="submitAnswers()">Submit</button>
+    <div id="result" class="result hidden"></div>
+
+    <div id="party-descriptions" class="hidden">
+        <h2>Political Party Descriptions</h2>
+        <p><strong>Democratic Party:</strong> The Democratic Party typically advocates for a mixed economy, social justice, and government intervention in the economy to promote social welfare and address inequality.</p>
+        <p><strong>Republican Party:</strong> The Republican Party generally emphasizes limited government, free market policies, and individual liberties. It often reducing government spending.</p>
+        <p><strong>Independent:</strong> Independent candidates or voters do not align strictly with any political party. They often hold a mix of liberal and conservative views and may prioritize specific issues over party loyalty.</p>
+    </div>
+
+    <script>
+        let scores = {
+            democratic: 0,
+            republican: 0,
+            independent: 0
+        };
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        const parties = document.querySelectorAll('.party');
+
+        parties.forEach(party => {
+            party.addEventListener('dragover', (ev) => {
+                ev.preventDefault(); // Prevent default to allow drop
+            });
+
+            party.addEventListener('drop', (ev) => {
+                ev.preventDefault();
+                const data = ev.dataTransfer.getData("text");
+                const droppedElement = document.getElementById(data);
+                party.appendChild(droppedElement);
+            });
+        });
+
+        function submitAnswers() {
+            const partyPolicies = {
+                democratic: ['universal-healthcare', 'green-new-deal', 'social-security', 'minimum-wage', 'gun-control', 'climate-action'],
+                republican: ['tax-cuts', 'small-government', 'balanced-budget', 'tax-reform', 'infrastructure', 'voter-id'],
+                independent: ['social-issues', 'nonpartisan-approach'] // Define independent policies
+            };
+
+            // Reset previous match classes
+            document.querySelectorAll('.policy').forEach(policy => {
+                policy.classList.remove('matched', 'wrong');
+            });
+
+            let totalCorrect = 0;
+
+            for (const [party, policies] of Object.entries(partyPolicies)) {
+                const partyDiv = document.getElementById(party);
+                const droppedPolicies = Array.from(partyDiv.children).map(el => el.id);
+                
+                droppedPolicies.forEach(policy => {
+                    const policyElement = document.getElementById(policy);
+                    if (policies.includes(policy)) {
+                        totalCorrect++;
+                        policyElement.classList.add('matched');
+                    } else {
+                        policyElement.classList.add('wrong');
+                    }
+                });
+            }
+
+            const totalScore = totalCorrect;
+            const totalPolicies = Object.values(partyPolicies).flat().length;
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `You scored ${totalScore} out of ${totalPolicies}.`;
+            resultDiv.classList.remove('hidden');
+
+            const partyDescriptions = document.getElementById('party-descriptions');
+            partyDescriptions.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
