@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Comparison</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { display: flex; justify-content: space-between; }
+        .candidate { width: 45%; padding: 10px; border: 1px solid #ccc; margin: 5px; }
+        h2 { text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Candidate Comparison</h1>
+    <div class="container">
+        {% for candidate in candidates %}
+        <div class="candidate">
+            <h2>{{ candidate.name }}</h2>
+            <h3>Gemini Summary</h3>
+            {% if candidate.gemini_response['candidates'] %}
+                {% set content = candidate.gemini_response['candidates'][0]['content']['parts'][0]['text'] %}
+                <p class="summary">{{ content | safe }}</p>
+            {% else %}
+                <p>No summary available.</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

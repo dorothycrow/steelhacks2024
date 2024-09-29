@@ -5,26 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Candidate Comparison</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .container { display: flex; justify-content: space-between; }
-        .candidate { width: 45%; padding: 10px; border: 1px solid #ccc; margin: 5px; }
-        h2 { text-align: center; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
     </style>
 </head>
 <body>
-    <h1>Candidate Comparison</h1>
-    <div class="container">
-        {% for candidate in candidates %}
-            <div class="candidate">
-                <h2>{{ candidate.name }}</h2>
-                <h3>FEC Data</h3>
-                <pre>{{ candidate.fec_data | tojson(indent=2) }}</pre>
-                <h3>Wikipedia Summary</h3>
-                <p>{{ candidate.wiki_summary }}</p>
-                <h3>Gemini Summary</h3>
-                <p>{{ candidate.gemini_response.text }}</p>
-            </div>
-        {% endfor %}
-    </div>
+    <h1>Candidate Comparison: Kamala Harris vs. Donald Trump</h1>
+    <h2>This content is AI-generated</h2>
+    <table>
+        <tr>
+            <th>Issue</th>
+            <th>Kamala Harris</th>
+            <th>Donald Trump</th>
+        </tr>
+        <tr>
+            <td>Social Policy</td>
+            <td>Focuses on equity, criminal justice reform, and promoting diversity.</td>
+            <td>Emphasizes law and order, and supports policies that favor traditional values.</td>
+        </tr>
+        <tr>
+            <td>Healthcare</td>
+            <td>Advocates for expanding the Affordable Care Act and supports Medicare for All.</td>
+            <td>Promotes repealing the Affordable Care Act and emphasizes private sector solutions.</td>
+        </tr>
+        <tr>
+            <td>Education</td>
+            <td>Supports increasing funding for public schools and making college more affordable.</td>
+            <td>Advocates for school choice and charter schools, focusing on reducing federal involvement.</td>
+        </tr>
+        <tr>
+            <td>Law Enforcement</td>
+            <td>Supports police reform and accountability measures.</td>
+            <td>Strongly supports law enforcement and opposes defunding the police.</td>
+        </tr>
+        <tr>
+            <td>Taxes</td>
+            <td>Supports higher taxes on the wealthy to fund social programs.</td>
+            <td>Advocates for tax cuts and deregulation to stimulate economic growth.</td>
+        </tr>
+        <tr>
+            <td>Abortion</td>
+            <td>Strongly supports women's right to choose and access to reproductive healthcare.</td>
+            <td>Opposes abortion and supports restrictions on access to reproductive services.</td>
+        </tr>
+        <tr>
+            <td>Sustainability</td>
+            <td>Prioritizes climate change initiatives and green energy investments.</td>
+            <td>Has been criticized for rolling back environmental regulations and promoting fossil fuels.</td>
+        </tr>
+        <tr>
+            <td>Criticism</td>
+            <td>Criticized for her record as a prosecutor and positions on criminal justice.</td>
+            <td>Criticized for divisive rhetoric and handling of various controversies during his presidency.</td>
+        </tr>
+    </table>
 </body>
 </html>
