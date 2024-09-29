@@ -3,12 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home page</title>
+    <title>Home Page</title>
+    <link rel="stylesheet" href="static/indexStyle.css">
 </head>
 <body>
-    <h1>voter up</h1>
-    <a href="{{ url_for('signup') }}">
-        <button>Sign Up</button>
-    </a>
+    <div class="container">
+        <div class="header">
+            <h1>Voter Up</h1>
+            <div class="nav-menu">
+                <a href="#">Upcoming Elections</a>
+                <a href="#">Trivia Game</a>
+                <a href="#">More Info</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <a href="{{ url_for('signup') }}">
+                <button class="signup-btn">Sign Up</button>
+            </a>
+            <a href="#">
+                <button class="login-btn">Log In</button>
+            </a>
+        </div>
+    </div>
 </body>
 </html>

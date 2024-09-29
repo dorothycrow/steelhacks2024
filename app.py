@@ -106,6 +106,12 @@ def elections():
     #elections = get_upcoming_elections(location)
     return render_template('elections.html', elections=elections)
 
+
+@app.route('/login')
+def login():
+    return "Log In Page coming soon!"
+
+
 def get_upcoming_elections(location):
     # Replace with your actual API endpoint
     api_url = f"https://api.example.com/elections?location={location}"
