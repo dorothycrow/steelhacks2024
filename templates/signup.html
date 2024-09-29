@@ -4,35 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up and Check Your Voter Registration Status!</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            max-width: 400px; /* Limit the width to prevent overflow */
-        }
-        label {
-            margin: 5px 0 2px;
-        }
-        input {
-            margin-bottom: 10px;
-            padding: 8px;
-            font-size: 14px;
-        }
-        button {
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body>
     <form method="POST" action="/submit_signup">
@@ -56,19 +27,12 @@
         <label for="city">City:</label>
         <input type="text" id="city" name="city" required>
 
-        <label for="address">Address:</label>
-        <input type="text" id="address" name="address" required>
-
-        <label for="city">City:</label>
-        <input type="text" id="city" name="city" required>
-
         <label for="state">State (ex. PA):</label>
         <input type="text" id="state" name="state" required>
 
         <label for="county">County (ex. Allegheny):</label>
         <input type="text" id="county" name="county" required>
 
-        <label for="zip">Zip Code (ex. 12345):</label>
         <label for="zip">Zip Code (ex. 12345):</label>
         <input type="text" id="zip" name="zip" required>
 
