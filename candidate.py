@@ -5,9 +5,6 @@ import google.generativeai as genai
 
 # Replace with your actual API keys
 
-#openai_client = OpenAI(api_key=OPENAI_API_KEY)
-#genai.configure(api_key=GEMINI_API_KEY) 
-
 
 
 class Candidate:
