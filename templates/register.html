@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How to Register </title>
+    <title>How to Register to Vote</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,21 +16,26 @@
         ul {
             line-height: 1.6;
         }
+        a {
+            color: #2980b9;
+        }
     </style>
 </head>
 <body>
-    <h1>You are not registered to vote! Here's how you can:</h1>
-    <p>Registering to vote is an important step in participating in your democracy. Follow these steps to ensure you’re registered:</p>
+    <h1>How to Register to Vote in Your State</h1>
+    <p>Participating in democracy is essential! Follow these steps to register to vote:</p>
     <ul>
-        <li><strong>Check Your Eligibility:</strong> Ensure you meet the eligibility requirements to vote in your state.</li>
-        <li><strong>Visit Your State's Election Office Website:</strong> Find specific information about voter registration in your state.</li>
-        <li><strong>Fill Out the Registration Form:</strong> You can often register online, by mail, or in person.</li>
-        <li><strong>Provide Necessary Information:</strong> Be prepared to provide identification and other required details.</li>
-        <li><strong>Submit Your Registration:</strong> Make sure to submit your application before your state's deadline.</li>
-        <li><strong>Confirm Your Registration:</strong> After submitting, check your registration status to ensure you are registered to vote.</li>
+        <li><strong>Check Your Eligibility:</strong> Make sure you meet your state's eligibility requirements.</li>
+        <li><strong>Visit Your State's Election Office Website:</strong> For detailed voter registration information, go to <a href="{{ election_body['electionInfoUrl'] }}" target="_blank">Election Info</a>.</li>
+        <li><strong>Complete the Registration Form:</strong> You can usually register online, by mail, or in person. Access the registration form here: <a href="{{ election_body['electionRegistrationUrl'] }}" target="_blank">Registration Form</a>.</li>
+        <li><strong>Provide Required Information:</strong> Be ready to submit identification and other necessary details.</li>
+        <li><strong>Submit Your Registration:</strong> Ensure you submit your application before the registration deadline.</li>
+        <li><strong>Confirm Your Registration:</strong> After submitting, verify your registration status here: <a href="{{ election_body['electionRegistrationConfirmationUrl'] }}" target="_blank">Check Registration Status</a>.</li>
+        <li><strong>Vote Absentee if Needed:</strong> If you can’t vote in person, apply for an absentee ballot: <a href="{{ election_body['absenteeVotingInfoUrl'] }}" target="_blank">Absentee Voting Info</a>.</li>
+        <li><strong>Find Your Voting Location:</strong> Locate where to vote: <a href="{{ election_body['votingLocationFinderUrl'] }}" target="_blank">Voting Location Finder</a>.</li>
+        <li><strong>Track Your Ballot:</strong> After voting, you can track your ballot here: <a href="{{ election_body['ballotInfoUrl'] }}" target="_blank">Track My Ballot</a>.</li>
     </ul>
-    <p>For more detailed information and resources, visit <a href="https://www.canivote.org/" target="_blank">CanIVote.org</a>.</p>
-    <button onclick="location.href='{{ url_for('elections') }}'">Continue to see upcoming elections and more!</button>
-
+    <p>For more resources, visit <a href="https://www.canivote.org/" target="_blank">CanIVote.org</a>.</p>
+    <button onclick="location.href='{{ url_for('elections') }}'">Continue to Upcoming Elections</button>
 </body>
 </html>

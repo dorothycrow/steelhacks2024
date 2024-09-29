@@ -116,7 +116,10 @@ def submit_signup():
 
 @app.route('/register')
 def register():
-    return render_template('register.html')
+    election = get_upcoming_elections()
+    election = election.get('state')
+    election_body = election[0]['electionAdministrationBody']
+    return render_template('register.html', election_body=election_body)
 
 @app.route('/elections')
 def elections():
