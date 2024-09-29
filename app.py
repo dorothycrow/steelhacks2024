@@ -141,7 +141,7 @@ def login():
 
 
 def get_upcoming_elections():
-    API_KEY = 'AIzaSyBOx-4M4gD-2KcQZkHqP0wVEfHOqVrv4nY'
+    API_KEY = ''
     user = User.query.order_by(User.id.desc()).first()  # Get the last user added
     address = user.address + ' ' + user.city + ' ' + user.state
     #election_id = 9000
