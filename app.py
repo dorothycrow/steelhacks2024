@@ -2,6 +2,13 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify, s
 from models import db, User  # Import 'db' and 'User' from models
 from bs4 import BeautifulSoup
 #import axios
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 import yaml
 import requests
@@ -44,8 +51,15 @@ def index():
 
 @app.route('/user_profile')
 def user_profile():
-    user = {'username': 'john_doe', 'location': 'New York'}
-    return render_template('user_profile.html', user=user)
+    user = User.query.order_by(User.id.desc()).first()  # Get the last user added
+    if user:
+        user_info = {
+            'username': f"{user.fName} {user.lName}",
+            'location': f"{user.county}, {user.state}"
+        }
+        return render_template('user_profile.html', user=user_info)
+    else:
+        return "No users found", 404
 
 @app.route('/signup')
 def signup():
@@ -120,7 +134,11 @@ def login():
 
 def get_upcoming_elections(location):
     # Replace with your actual API endpoint
-    api_url = f"https://api.example.com/elections?location={location}"
+    
+    user = User.query.order_by(User.id.desc()).first()  # Get the last user added
+    address = user.address + ' ' + user.state
+    #election_id = 9000
+    api_url = f"https://www.googleapis.com/civicinfo/v2/voterinfo?key={API_KEY}&address={address}&electionId=9000"
     try:
         response = requests.get(api_url)
         response.raise_for_status()  # Raise an error for bad responses

@@ -10,16 +10,21 @@ class User(db.Model):
     id = db.Column(Integer, primary_key=True, autoincrement=True)
     fName = db.Column(String(64), nullable=False)
     lName = db.Column(String(64), nullable=False)
+    address = db.Column(String(64), nullable=False)
+    city = db.Column(String(64), nullable=False)
     state = db.Column(String(64), nullable=False)
     county = db.Column(String(64), nullable=False)
     zipcode = db.Column(String(20), nullable=False)
     dob = db.Column(String(20), nullable=False)
     registered = db.Column(Boolean, nullable=False)
     gameBadge = db.Column(Boolean, nullable=False)
+    
 
-    def __init__(self, fName, lName, state, county, zipcode, dob, registered, gameBadge):
+    def __init__(self, fName, lName, address, city, state, county, zipcode, dob, registered, gameBadge):
         self.fName = fName
         self.lName = lName
+        self.address = address
+        self.city = city
         self.state = state
         self.county = county
         self.zipcode = zipcode
