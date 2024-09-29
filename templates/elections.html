@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upcoming Elections</title>
     <link rel="stylesheet" type="text/css" href="/static/indexStyle.css">
-    <!-- 
-    <link rel="stylesheet" type="text/css" href="/static/countdown.scss">
-    -->
-    <script src="countdown.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,9 +18,9 @@
             margin-bottom: 20px;
         }
         .profile-icon {
-            width: 40px; /* Adjust size as needed */
-            height: 40px; /* Adjust size as needed */
-            vertical-align: middle; /* Align with text */
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
             margin-right: 10px;
         }
         .container {
@@ -79,6 +75,10 @@
         a {
             text-decoration: none;
         }
+        #countdown {
+            font-size: 24px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -97,17 +97,47 @@
                         <h2>{{ election_info['name'] }}</h2>
                         <p><strong>Election Day:</strong> {{ election_info['electionDay'] }}</p>
                         <p><strong>OCD Division ID:</strong> {{ election_info['ocdDivisionId'] }}</p>
+                        <div id="countdown" data-election-date="{{ election_info['electionDay'] }}"></div>
                     </li>
                 {% else %}
                     <li>No upcoming elections found.</li>
                 {% endif %}
             </ul>
-            
-            
         </div>
 
         <a href="{{ url_for('index') }}" class="button">Go back to sign up page</a>
         <a href="{{ url_for('game') }}" class="button">Play A Trivia Game!</a>
     </div>
+    
+    <script>
+        // Countdown script to run after the document loads
+        document.addEventListener("DOMContentLoaded", function() {
+            const countdownElement = document.getElementById("countdown");
+            const electionDateString = countdownElement.getAttribute("data-election-date");
+            const electionDate = new Date(electionDateString + "T00:00:00"); // Ensure it's treated as a date
+
+            const updateCountdown = () => {
+                const now = new Date().getTime();
+                const distance = electionDate.getTime() - now;
+
+                if (distance < 0) {
+                    countdownElement.innerHTML = "The election has passed.";
+                    clearInterval(timer);
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            };
+
+            const timer = setInterval(updateCountdown, 1000);
+            updateCountdown(); // initial call
+        });
+    </script>
+
 </body>
 </html>
