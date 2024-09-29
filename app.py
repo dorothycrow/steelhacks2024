@@ -60,7 +60,8 @@ def user_profile():
     if user:
         user_info = {
             'username': f"{user.fName} {user.lName}",
-            'location': f"{user.county}, {user.state}"
+            'location': f"{user.county}, {user.state}",
+            'gameBadge': user.gameBadge
         }
         return render_template('user_profile.html', user=user_info)
     else:
@@ -252,6 +253,16 @@ def get_upcoming_elections():
 @app.route('/elections/game')
 def game():
     return render_template('game.html')
+
+@app.route('/update_game_badge', methods=['POST'])
+def update_game_badge():
+    last_user = User.query.order_by(User.id.desc()).first()  # Get the last user
+    if last_user:
+        last_user.gameBadge = True
+        db.session.commit()
+        return jsonify({'status': 'success'})
+    return jsonify({'status': 'error', 'message': 'User not found'})
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5005, debug=True)

@@ -4,11 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
+    <style>
+        .badge {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>User Profile</h1>
     <p>Username: {{ user.username }}</p>
     <p>Location: {{ user.location }}</p>
+
+    <!-- Badge Section -->
+    {% if user.gameBadge %}
+        <div class="badge">🎖️ Game Badge Earned!</div>
+    {% else %}
+        <p>No game badge earned yet.</p>
+    {% endif %}
+
     <a href="{{ url_for('elections') }}">Back to upcoming elections</a>
 </body>
 </html>

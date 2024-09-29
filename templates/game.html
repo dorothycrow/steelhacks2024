@@ -123,16 +123,16 @@
             const partyPolicies = {
                 democratic: ['universal-healthcare', 'green-new-deal', 'social-security', 'minimum-wage', 'gun-control', 'climate-action'],
                 republican: ['tax-cuts', 'small-government', 'balanced-budget', 'tax-reform', 'infrastructure', 'voter-id'],
-                independent: ['social-issues', 'nonpartisan-approach'] // Define independent policies
+                independent: ['social-issues', 'nonpartisan-approach']
             };
-
+        
             // Reset previous match classes
             document.querySelectorAll('.policy').forEach(policy => {
                 policy.classList.remove('matched', 'wrong');
             });
-
+        
             let totalCorrect = 0;
-
+        
             for (const [party, policies] of Object.entries(partyPolicies)) {
                 const partyDiv = document.getElementById(party);
                 const droppedPolicies = Array.from(partyDiv.children).map(el => el.id);
@@ -147,16 +147,35 @@
                     }
                 });
             }
-
+        
             const totalScore = totalCorrect;
             const totalPolicies = Object.values(partyPolicies).flat().length;
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = `You scored ${totalScore} out of ${totalPolicies}.`;
             resultDiv.classList.remove('hidden');
-
+        
             const partyDescriptions = document.getElementById('party-descriptions');
             partyDescriptions.classList.remove('hidden');
+        
+            // Update gameBadge if score is 14
+            if (totalScore === 14) {
+                fetch('/update_game_badge', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ success: true }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Congratulations! You earned the game badge!');
+                    }
+                })
+                .catch(error => console.error('Error updating game badge:', error));
+            }
         }
+        
     </script>
 </body>
 </html>
