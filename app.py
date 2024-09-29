@@ -8,6 +8,8 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 import time
 import os
+import yaml
+import requests
 
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(app.root_path, "voter.db")
