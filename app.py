@@ -2,6 +2,17 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify, s
 from models import db, User  # Import 'db' and 'User' from models
 from bs4 import BeautifulSoup
 #import axios
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+from selenium import webdriver
+from bs4 import BeautifulSoup
+import time
 
 import yaml
 import requests
@@ -82,37 +93,117 @@ def submit_signup():
         db.session.commit()
         
         # URL of the target website
-        url = 'https://www.pavoterservices.pa.gov/Pages/voterregistrationstatus.aspx'
         
-        # Create a session to persist parameters across requests
+        """
+        url = "https://www.pavoterservices.pa.gov/Pages/voterregistrationstatus.aspx"
+        payload = {
+            'county': 'Allegheny',
+            'zipcode': '15213',
+            'first_name': 'Riya',
+            'last_name': 'Shah',
+            'dob': '09/03/2004'
+        }
+
         with requests.Session() as session:
-            response = session.post(url, data={
-                'county': new_user.county,
-                'zipcode': new_user.zipcode,
-                'first_name': new_user.fName,
-                'last_name': new_user.lName,
-                'dob': new_user.dob,
-                'address': new_user.address,
-                'city': new_user.city
-            })
+            response = session.post(url, data=payload)
+            if response.status_code == 200:
+                print("Form submitted successfully!")
+                soup = BeautifulSoup(response.content, 'html.parser')
+    
+                # Print the entire HTML content of the page
+                print("HTML Content of the Page:")
+                print(soup.prettify())  # prettify() will format the HTML content for easier reading
+                
+                print("--------")
         
-        # Parse the response
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.content, 'html.parser')
-            voter_status = soup.find('div', class_='voter-status')  # Update selector as needed
-            if voter_status:
-                new_user.registered = True
-                db.session.commit()
-                return jsonify({'status': 'success', 'voter_status': voter_status.text.strip()})
+                status_element = soup.find(text="ACTIVE")
+                
+                if status_element:
+                    print("Voter is ACTIVE.")
+                    
+                else:
+                    print("Voter status not found.")
+                    
             else:
-                new_user.registered = False
-                db.session.commit()
-                #return jsonify({'status': 'error', 'message': 'Voter status not found'})
-                return redirect(url_for('register'))  # Redirect to the new page
+                print("Failed to submit form", response.status_code)
+            """
+           
+        """ 
+        url = "https://www.sec.state.ma.us/voterregistrationsearch/myvoterregstatus.aspx"
+        response = session.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # Extract hidden fields required for form submission
+        viewstate = soup.find('input', {'id': '__VIEWSTATE'})['value']
+        eventvalidation = soup.find('input', {'id': '__EVENTVALIDATION'})['value']
+        viewstategenerator = soup.find('input', {'id': '__VIEWSTATEGENERATOR'})['value']
+
+        # Prepare payload with the user's data and hidden fields
+        payload = {
+            'ctl00$ContentPlaceHolder1$txtFirstName': 'Riya',
+            'ctl00$ContentPlaceHolder1$txtLastName': 'Shah',
+            'ctl00$ContentPlaceHolder1$ddlMonth': 'September',  # Select dropdown for month
+            'ctl00$ContentPlaceHolder1$ddlDay': '3',  # Select dropdown for day
+            'ctl00$ContentPlaceHolder1$ddlYear': '2004',  # Select dropdown for year
+            'ctl00$ContentPlaceHolder1$txtZipCode': '01720',  # Zip code field
+            'ctl00$ContentPlaceHolder1$chkboxIAgree': 'on',  # Checkbox to agree to the terms
+            '__VIEWSTATE': viewstate,
+            '__EVENTVALIDATION': eventvalidation,
+            '__VIEWSTATEGENERATOR': viewstategenerator,
+        }
+
+        # Submit the form
+        response = session.post(url, data=payload)
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # Process the response
+        if "voter status" in soup.text.lower():
+            print("Voter registration status found.")
         else:
-            return jsonify({'status': 'error', 'message': 'Failed to retrieve information'})
+            print("No voter registration status found.")
+            
+        """
+        
+        
+
+        driver = webdriver.Chrome()  # Ensure you have the correct driver installed
+        driver.get("https://www.sec.state.ma.us/voterregistrationsearch/myvoterregstatus.aspx")
+        
+        # Fill out form fields
+        driver.find_element(By.ID, "MainContent_txtFirstName").send_keys("Riya")
+        driver.find_element(By.ID, "MainContent_txtLastName").send_keys("Shah")
+        
+        # Select Month
+        Select(driver.find_element(By.ID, "MainContent_ddlMonth")).select_by_value('9')  # September
+        
+        # Select Day
+        Select(driver.find_element(By.ID, "MainContent_ddlDay")).select_by_value('3')
+        
+        # Select Year
+        Select(driver.find_element(By.ID, "MainContent_ddlYear")).select_by_value('2004')
+        
+        # Fill out Zip Code
+        driver.find_element(By.ID, "MainContent_txtZip").send_keys("01720")
+        
+        # Agree to the terms
+        driver.find_element(By.ID, "MainContent_chkUnderstand").click()
+        
+        # Submit the form
+        driver.find_element(By.ID, "MainContent_btnSearch").click()
+        
+        # Wait for the response to load
+        time.sleep(3)  # You might need to adjust this wait time based on page load time
+        
+        # Get the response
+        page_source = driver.page_source
+        driver.quit()
+        
+        # Parse the result with BeautifulSoup (optional)
+        soup = BeautifulSoup(page_source, 'html.parser')
+        # print(soup.prettify())
 
     return redirect(url_for('elections'))
+
 
 @app.route('/register')
 def register():
