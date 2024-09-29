@@ -8,7 +8,8 @@ import requests
 import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(app.root_path, "voter.db")
+#app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(app.root_path, "voter.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(app.root_path, "voter2.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize SQLAlchemy with the Flask app
@@ -67,6 +68,8 @@ def submit_signup():
         new_user = User(
             request.form["firstName"],
             request.form["lastName"],
+            request.form["address"],
+            request.form["city"],
             request.form["state"],
             request.form["county"],
             request.form["zip"],
@@ -89,6 +92,8 @@ def submit_signup():
                 'first_name': new_user.fName,
                 'last_name': new_user.lName,
                 'dob': new_user.dob,
+                'address': new_user.address,
+                'city': new_user.city
             })
         
         # Parse the response
@@ -115,8 +120,7 @@ def register():
 
 @app.route('/elections')
 def elections():
-    location = request.args.get('location')
-    elections = get_upcoming_elections(location)
+    elections = get_upcoming_elections()
     return render_template('elections.html', elections=elections)
 
 
@@ -125,11 +129,11 @@ def login():
     return render_template('login.html')
 
 
-def get_upcoming_elections(location):
+def get_upcoming_elections():
     # Replace with your actual API endpoint
-    
+    API_KEY = 'AIzaSyBOx-4M4gD-2KcQZkHqP0wVEfHOqVrv4nY'
     user = User.query.order_by(User.id.desc()).first()  # Get the last user added
-    address = user.address + ' ' + user.state
+    address = user.address + ' ' + user.city + ' ' + user.state
     #election_id = 9000
     api_url = f"https://www.googleapis.com/civicinfo/v2/voterinfo?key={API_KEY}&address={address}&electionId=9000"
     try:
@@ -144,12 +148,12 @@ def get_upcoming_elections(location):
             {'id': 2, 'name': 'Mock Election 2', 'date': '2024-12-15'},
         ]  # Example mock elections
 
-@app.route('/election/<int:election_id>')
-def election_detail(election_id):
+#@app.route('/election/<int:election_id>')
+#def election_detail(election_id):
     # Fetch election details based on election_id (you may need to adjust this)
     # For demonstration, let's use a mock detail
-    election = {'id': election_id, 'name': f'Election {election_id}', 'date': '2024-11-01', 'details': 'Details about the election.'}
-    return render_template('election_detail.html', election=election)
+    #election = {'id': election_id, 'name': f'Election {election_id}', 'date': '2024-11-01', 'details': 'Details about the election.'}
+    #return render_template('election_detail.html', election=election)
 
 @app.route('/elections/game')
 def game():

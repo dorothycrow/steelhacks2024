@@ -92,22 +92,38 @@
 
         <div class="election-list">
             <ul>
-                <!--
-                <p id="demo"></p>
-                
-                <script src="/scripts/countdown.js"></script>
-                -->
- 
                 {% for election in elections %}
-                    <li>
-                        <a href="{{ url_for('election_detail', election_id=election.id) }}" class="election-link">
-                            {{ election.name }} - Date: {{ election.date }}
-                        </a>
-                    </li>
+                    {% if election.id == 9000 %}
+                        <li>
+                            <h2>{{ election.name }}</h2>
+                            <p><strong>Election Day:</strong> {{ election.electionDay }}</p>
+                            <p><strong>OCD Division ID:</strong> {{ election.ocdDivisionId }}</p>
+            
+                            <h3>Election Administration Information</h3>
+                            <p><strong>Admin Body:</strong> {{ election.electionAdministrationBody.name }}</p>
+                            <ul>
+                                <li><a href="{{ election.electionAdministrationBody.electionInfoUrl }}">Election Info</a></li>
+                                <li><a href="{{ election.electionAdministrationBody.electionRegistrationUrl }}">Register to Vote</a></li>
+                                <li><a href="{{ election.electionAdministrationBody.electionRegistrationConfirmationUrl }}">Registration Confirmation</a></li>
+                                <li><a href="{{ election.electionAdministrationBody.absenteeVotingInfoUrl }}">Absentee Voting Info</a></li>
+                                <li><a href="{{ election.electionAdministrationBody.votingLocationFinderUrl }}">Find Voting Location</a></li>
+                                <li><a href="{{ election.electionAdministrationBody.ballotInfoUrl }}">Ballot Info</a></li>
+                            </ul>
+            
+                            <h4>Correspondence Address</h4>
+                            <p>
+                                {{ election.electionAdministrationBody.correspondenceAddress.line1 }}<br>
+                                {{ election.electionAdministrationBody.correspondenceAddress.city }},
+                                {{ election.electionAdministrationBody.correspondenceAddress.state }} 
+                                {{ election.electionAdministrationBody.correspondenceAddress.zip }}
+                            </p>
+                        </li>
+                    {% endif %}
                 {% else %}
                     <li>No upcoming elections found.</li>
                 {% endfor %}
             </ul>
+            
         </div>
 
         <a href="{{ url_for('index') }}" class="button">Go back to sign up page</a>
