@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session, g, flash
 from models import db, User  # Import 'db' and 'User' from models
 from bs4 import BeautifulSoup
-import axios
+#import axios
 
 import yaml
 import requests
@@ -44,7 +44,8 @@ def index():
 
 @app.route('/user_profile')
 def user_profile():
-    return render_template('user_profile.html')
+    user = {'username': 'john_doe', 'location': 'New York'}
+    return render_template('user_profile.html', user=user)
 
 @app.route('/signup')
 def signup():
@@ -107,8 +108,8 @@ def register():
 
 @app.route('/elections')
 def elections():
-    #location = request.args.get('location')
-    #elections = get_upcoming_elections(location)
+    location = request.args.get('location')
+    elections = get_upcoming_elections(location)
     return render_template('elections.html', elections=elections)
 
 
@@ -126,7 +127,11 @@ def get_upcoming_elections(location):
         return response.json()  # Assuming the response is in JSON format
     except requests.RequestException as e:
         print(f"Error fetching elections: {e}")
-        return []  # Return an empty list if there's an error
+        # Return a mock list of elections
+        return [
+            {'id': 1, 'name': 'Mock Election 1', 'date': '2024-11-01'},
+            {'id': 2, 'name': 'Mock Election 2', 'date': '2024-12-15'},
+        ]  # Example mock elections
 
 @app.route('/election/<int:election_id>')
 def election_detail(election_id):
@@ -134,6 +139,10 @@ def election_detail(election_id):
     # For demonstration, let's use a mock detail
     election = {'id': election_id, 'name': f'Election {election_id}', 'date': '2024-11-01', 'details': 'Details about the election.'}
     return render_template('election_detail.html', election=election)
+
+@app.route('/elections/game')
+def game():
+    return render_template('game.html')
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5005, debug=True)
