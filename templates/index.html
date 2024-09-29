@@ -9,16 +9,20 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Voter Up</h1>
+            <h1>VoterUp</h1>
+            <p class="tagline">Empowering Every Voice</p>
         </div>
 
         <div class="main-content">
-            <a href="{{ url_for('signup') }}">
-                <button class="signup-btn">Sign Up</button>
-            </a>
-            <a href="{{ url_for('login') }}">
-                <button class="login-btn">Log In</button>
-            </a>
+            <div class="button-container">
+                <a href="{{ url_for('signup') }}">
+                    <button class="signup-btn">Sign Up</button>
+                </a>
+                <a href="{{ url_for('login') }}">
+                    <button class="login-btn">Log In</button>
+                </a>
+            </div>
+            <img src="static/icons/flag.png" alt="US Flag" class="us-flag"> <!-- Flag below buttons -->
         </div>
     </div>
 </body>

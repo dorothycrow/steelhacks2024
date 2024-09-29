@@ -20,13 +20,14 @@ body {
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.9); /* Transparent white background */
     position: relative;
 }
 
 .header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; /* Stack title and tagline */
+    align-items: center; /* Center the content */
     margin-bottom: 50px;
 }
 
@@ -35,18 +36,21 @@ h1 {
     color: #333;
 }
 
-.nav-menu {
-    display: flex;
-    gap: 50px;
-    font-size: 1.5em;
+.tagline {
+    font-size: 1.5em; /* Adjust size as needed */
+    color: #555; /* Adjust color as needed */
+    margin-top: 10px; /* Space between title and tagline */
 }
 
 .main-content {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    flex-grow: 1;
+    flex-direction: column; /* Stack button container and flag */
+    align-items: center; /* Center items */
+}
+
+.button-container {
+    display: flex; /* Keep buttons next to each other */
+    gap: 20px; /* Space between buttons */
 }
 
 button {
@@ -80,8 +84,11 @@ button:hover {
     background-color: #218838;
 }
 
-.nav-menu a {
-    color: #333;
-    text-decoration: none;
-    cursor: pointer;
+.us-flag {
+    margin-top: 45px; /* Space above the image */
+    width: 300px; /* Set a desired width */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Ensure it behaves like a block element */
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto; /* Center horizontally */
 }
