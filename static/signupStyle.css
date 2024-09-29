@@ -10,6 +10,7 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #f0f0f0;
+    overflow: hidden;
 }
 
 form {
@@ -19,13 +20,16 @@ form {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 400px;
     width: 100%;
+    overflow: hidden;
 }
 
+/* Header styling */
 h1 {
     text-align: center;
     margin-bottom: 20px;
 }
 
+/* Label styling */
 label {
     display: block;
     margin-bottom: 8px;
@@ -33,19 +37,21 @@ label {
     color: #333;
 }
 
-input[type="text"] {
-    width: calc(100% - 12px);
+/* Input field styling */
+input[type="text"], input[type="password"] {
+    width: calc(100% - 24px); /* Increase width of all input fields */
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* Reduce margin to save space */
     border: 1px solid #ccc;
     border-radius: 4px;
     outline: none;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus, input[type="password"]:focus {
     border-color: #007BFF;
 }
 
+/* Button styling */
 button {
     width: 100%;
     padding: 12px;
