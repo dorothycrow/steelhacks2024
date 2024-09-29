@@ -6,7 +6,6 @@ import google.generativeai as genai
 # Replace with your actual API keys
 
 
-
 class Candidate:
     def __init__(self, name, cycle=2024):
         self.name = name

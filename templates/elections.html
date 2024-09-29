@@ -12,17 +12,7 @@
             margin: 0;
             padding: 20px;
         }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        .profile-icon {
-            width: 40px;
-            height: 40px;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -30,7 +20,45 @@
             background-color: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            position: relative; /* To position the profile icon */
         }
+
+        .profile-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #007BFF;
+            cursor: pointer; /* Indicate it's clickable */
+            position: absolute; /* Position it absolutely within the container */
+            top: 20px; /* Adjust top spacing */
+            left: 20px; /* Adjust left spacing */
+        }
+
+        .register-button {
+            position: absolute; /* Position it absolutely within the container */
+            top: 20px; /* Adjust top spacing */
+            right: 20px; /* Adjust right spacing */
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .register-button:hover {
+            background-color: #0056b3;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 70px 0 20px; /* Adjust margin to account for profile icon */
+            font-size: 2em;
+        }
+
         .election-list {
             padding: 15px;
             background-color: #f9f9f9;
@@ -38,13 +66,18 @@
             border-radius: 5px;
             margin-bottom: 20px;
         }
+
         ul {
             list-style-type: none;
             padding: 0;
         }
+
         li {
-            margin: 10px 0;
+            margin: 15px 0;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
         }
+
         a.election-link {
             display: block;
             padding: 10px;
@@ -55,9 +88,11 @@
             border-radius: 5px;
             transition: background-color 0.3s;
         }
+
         a.election-link:hover {
             background-color: #d3d3d3;
         }
+
         a.button {
             display: inline-block;
             padding: 10px 20px;
@@ -69,26 +104,33 @@
             transition: background-color 0.3s;
             text-align: center;
         }
+
         a.button:hover {
             background-color: #0056b3;
         }
-        a {
-            text-decoration: none;
-        }
+
         #countdown {
             font-size: 24px;
             margin-top: 20px;
+            color: red; /* Emphasize the countdown in red */
+            font-weight: bold; /* Make the countdown stand out */
+            text-align: center;
+        }
+
+        .no-elections {
+            color: #888; /* Subtle color for no elections message */
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>
-            <a href="{{ url_for('user_profile') }}">
-                <img src="static/icons/user-profile-icon.jpg" alt="Profile Icon" class="profile-icon">
-            </a>
-            Upcoming Elections
-        </h1>
+        <a href="{{ url_for('user_profile') }}">
+            <img src="static/icons/user-profile-icon.jpg" alt="Profile Icon" class="profile-icon">
+        </a>
+        <a href="{{ url_for('register') }}" class="register-button">Registration Info</a>
+
+        <h1>Upcoming Elections</h1>
 
         <div class="election-list">
             <ul>
@@ -100,13 +142,15 @@
                         <div id="countdown" data-election-date="{{ election_info['electionDay'] }}"></div>
                     </li>
                 {% else %}
-                    <li>No upcoming elections found.</li>
+                    <li class="no-elections">No upcoming elections found.</li>
                 {% endif %}
             </ul>
         </div>
 
-        <a href="{{ url_for('index') }}" class="button">Go back to sign up page</a>
-        <a href="{{ url_for('game') }}" class="button">Play A Trivia Game!</a>
+        <div style="text-align: center;">
+            <a href="{{ url_for('index') }}" class="button">Back to Login</a>
+            <a href="{{ url_for('game') }}" class="button">Play A Trivia Game!</a>
+        </div>
     </div>
     
     <script>
@@ -138,6 +182,5 @@
             updateCountdown(); // initial call
         });
     </script>
-
 </body>
 </html>
