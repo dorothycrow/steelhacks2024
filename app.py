@@ -120,8 +120,9 @@ def register():
 
 @app.route('/elections')
 def elections():
-    elections = get_upcoming_elections()
-    return render_template('elections.html', elections=elections)
+    election = get_upcoming_elections()
+    election_info = election.get('election')
+    return render_template('elections.html', election_info=election_info)
 
 
 @app.route('/login')

@@ -92,37 +92,17 @@
 
         <div class="election-list">
             <ul>
-                {% for election in elections %}
-                    {% if election.id == 9000 %}
-                        <li>
-                            <h2>{{ election.name }}</h2>
-                            <p><strong>Election Day:</strong> {{ election.electionDay }}</p>
-                            <p><strong>OCD Division ID:</strong> {{ election.ocdDivisionId }}</p>
-            
-                            <h3>Election Administration Information</h3>
-                            <p><strong>Admin Body:</strong> {{ election.electionAdministrationBody.name }}</p>
-                            <ul>
-                                <li><a href="{{ election.electionAdministrationBody.electionInfoUrl }}">Election Info</a></li>
-                                <li><a href="{{ election.electionAdministrationBody.electionRegistrationUrl }}">Register to Vote</a></li>
-                                <li><a href="{{ election.electionAdministrationBody.electionRegistrationConfirmationUrl }}">Registration Confirmation</a></li>
-                                <li><a href="{{ election.electionAdministrationBody.absenteeVotingInfoUrl }}">Absentee Voting Info</a></li>
-                                <li><a href="{{ election.electionAdministrationBody.votingLocationFinderUrl }}">Find Voting Location</a></li>
-                                <li><a href="{{ election.electionAdministrationBody.ballotInfoUrl }}">Ballot Info</a></li>
-                            </ul>
-            
-                            <h4>Correspondence Address</h4>
-                            <p>
-                                {{ election.electionAdministrationBody.correspondenceAddress.line1 }}<br>
-                                {{ election.electionAdministrationBody.correspondenceAddress.city }},
-                                {{ election.electionAdministrationBody.correspondenceAddress.state }} 
-                                {{ election.electionAdministrationBody.correspondenceAddress.zip }}
-                            </p>
-                        </li>
-                    {% endif %}
+                {% if election_info and election_info['id'] == '9000' %}
+                    <li>
+                        <h2>{{ election_info['name'] }}</h2>
+                        <p><strong>Election Day:</strong> {{ election_info['electionDay'] }}</p>
+                        <p><strong>OCD Division ID:</strong> {{ election_info['ocdDivisionId'] }}</p>
+                    </li>
                 {% else %}
                     <li>No upcoming elections found.</li>
-                {% endfor %}
+                {% endif %}
             </ul>
+            
             
         </div>
 
