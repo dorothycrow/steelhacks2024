@@ -4,11 +4,10 @@ from openai import OpenAI
 import google.generativeai as genai
 
 # Replace with your actual API keys
-FEC_API_KEY = 'URR0BmDklHS6hZZUuxUY9Kp4o54fcHA6Itw1emrE'
-fec_base_url = 'https://api.open.fec.gov/v1/'
-GEMINI_API_KEY = 'AIzaSyBmIDBw3-xMslVnA-hgyGlrqxj_EbSv2io'
-OPENAI_API_KEY = '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'
-openai_client = OpenAI(api_key=OPENAI_API_KEY)
+FEC_API_KEY = ''
+fec_base_url = ''
+GEMINI_API_KEY = ''
+#openai_client = OpenAI(api_key=OPENAI_API_KEY)
 genai.configure(api_key=GEMINI_API_KEY) 
 
 class Candidate:
