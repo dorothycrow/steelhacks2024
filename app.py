@@ -114,7 +114,7 @@ def elections():
 
 @app.route('/login')
 def login():
-    return "Log In Page coming soon!"
+    return render_template('login.html')
 
 
 def get_upcoming_elections(location):
