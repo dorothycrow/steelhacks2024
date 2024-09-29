@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session, g, flash
 from models import db, User  # Import 'db' and 'User' from models
 from bs4 import BeautifulSoup
+import axios
 
 import yaml
 import requests
@@ -40,6 +41,10 @@ def before_request():
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/user_profile')
+def user_profile():
+    return render_template('user_profile.html')
 
 @app.route('/signup')
 def signup():

@@ -3,7 +3,7 @@ axios.get('https://www.googleapis.com/civicinfo/v2/elections?key=AIzaSyBOx-4M4gD
  .then(response => {
    for(const i of response.data.elections){
      const val = i.electionDay;
-   
+    
      // Set the date we're counting down to
 var countDownDate = new Date(val).getTime();
 
