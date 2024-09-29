@@ -94,7 +94,7 @@
             <ul>
                 {% if election_info and election_info['id'] == '9000' %}
                     <li>
-                        <h2>{{ election_info['name'] }}</h2>
+                        <h2><a href="{{ url_for('candidates') }}" class="election-link">{{ election_info['name'] }}</a></h2>
                         <p><strong>Election Day:</strong> {{ election_info['electionDay'] }}</p>
                         <p><strong>OCD Division ID:</strong> {{ election_info['ocdDivisionId'] }}</p>
                         <div id="countdown" data-election-date="{{ election_info['electionDay'] }}"></div>
